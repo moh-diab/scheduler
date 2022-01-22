@@ -12,6 +12,9 @@ import InterviewerListItem from "components/InterviewerListItem.js";
 import InterviewerList from "components/InterviewerList.js";
 
 import Appointment from "components/Appointment/index.js";
+import Header from "components/Appointment/Header";
+import Empty from "components/Appointment/Empty";
+
 
 
 //Test Button component behaviour
@@ -114,7 +117,7 @@ storiesOf("InterviewerListItem", module)
   ));
 
 
-  //test behaviour of InterviewerList component
+//test behaviour of InterviewerList component
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
@@ -145,10 +148,12 @@ storiesOf("InterviewerList", module)
     />
   ));
 
-  
-  storiesOf("Appointment", module)
+
+storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
-  .add("Appointment with Time", () => <Appointment time="12pm" />);
+  .add("Appointment with Time", () => <Appointment time="12pm" />)
+  .add("Header", () => <Header time="12pm" />)
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
