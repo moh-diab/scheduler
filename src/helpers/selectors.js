@@ -1,9 +1,5 @@
-
-
-
 export function getAppointmentsForDay(state, day) {
   //return an array of appointments for that day
-  
   if(!state.days){
     return [];
   }
