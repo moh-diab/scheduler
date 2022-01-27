@@ -18,15 +18,6 @@ function getAppointmentsForDay(state, day) {
 }
 
 
-// {  
-//   "student": "Lydia Miller-Jones",
-//   "interviewer": {  
-//     "id": 1,
-//     "name": "Sylvia Palmer",
-//     "avatar": "https://i.imgur.com/LpaY82x.png"
-//   }
-// }
-
 function getInterview(state, interview) {
 
   let interviewObj = state.interviewers;
@@ -40,4 +31,17 @@ function getInterview(state, interview) {
   } 
 };
 
-export { getAppointmentsForDay, getInterview }
+function getInterviewersForDay(state, day) {
+
+  const result = []; 
+  const currentDay = state.days.filter(obj => obj.name === day)[0];
+
+  if (!currentDay) {
+    return result;
+  }
+  for (const id of currentDay.interviewers) {
+    result.push(state.interviewers[id]);
+  }
+  return result;
+}
+export { getAppointmentsForDay, getInterview, getInterviewersForDay }

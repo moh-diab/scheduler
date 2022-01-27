@@ -1,11 +1,15 @@
 import React from "react";
-import InterviewerListItem from "components/InterviewerListItem";
+
+import InterviewerListItem from "./InterviewerListItem";
 import "components/InterviewerList.scss";
 
 export default function InterviewerList(props) {
   // InterviewerList passes the setInterviewer function down to the InterviewerListItem
 
+  console.log("InterviewerList.js props.interviewers =", props.interviewers);
+
   const interviewers = props.interviewers.map(interviewer => {
+
     return (
       <InterviewerListItem
         key={interviewer.id}
