@@ -20,8 +20,8 @@ export default function Appointment(props) {
   const SAVING = "SAVING";
   const DELETING = "DELETING";
   const EDIT ="EDIT";
-  // const ERROR_SAVING = "ERROR_SAVING";
-  // const ERROR_DELETING = "ERROR_DELETING";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
 
   const { mode, transition, back } = useVisualMode(
@@ -37,12 +37,14 @@ export default function Appointment(props) {
     //need to have a Promise here to wait for the axios put 
     Promise.resolve(props.bookInterview(props.id, interview))
       .then(() => transition(SHOW))
-      .catch(err => console.log(err));
-  }
-
-  const deleteConfirmation = () => {
-    transition(CONFIRM, true);
-  };
+      .catch(err => {
+        transition(ERROR_SAVE, true)
+        console.log(err)
+      })
+    }
+  // const deleteConfirmation = () => {
+  //   transition(CONFIRM, true);
+  // };
 
   const deleteAppointment = () => {
     transition(DELETING, true);
@@ -50,7 +52,10 @@ export default function Appointment(props) {
     //console.log(props, "this is the props from index.js")
     Promise.resolve(props.cancelInterview(props.id))
       .then(() => transition(EMPTY))
-      .catch(err => console.log(err));
+      .catch(err => {
+        transition(ERROR_DELETE, true)
+        console.log(err)
+      });
   };
 
 
@@ -66,7 +71,7 @@ export default function Appointment(props) {
           id={props.id}
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete={deleteAppointment}
+          onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
       )}
@@ -99,6 +104,18 @@ export default function Appointment(props) {
         interviewers={props.interviewers}
         onCancel={() => back()}
         onSave={save}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error 
+        message="Unable to save, try again"
+        onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error 
+        message="Unable to delete"
+        onClose={() => back()}
         />
       )}
     </article>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 
 import DayList from "components/DayList";
@@ -12,8 +11,6 @@ import {
   from "helpers/selectors";
 
 import axios from "axios";
-
-
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -42,10 +39,9 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    return axios.put(`/api/appointments/${id}`, {interview})
-    .then(() => setState({...state, appointments}))
-    .catch(err => console.log(err));
-    
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => setState({ ...state, appointments }));
+
   }
 
   function cancelInterview(id) {
@@ -59,8 +55,7 @@ export default function Application(props) {
     };
     //console.log("this is state&appointments in application:", state, appointments)
     return axios.delete(`/api/appointments/${id}`)
-    .then(() => setState({...state, appointments}))
-    .catch(err => console.log(err));
+      .then(() => setState({ ...state, appointments }));
   };
 
 
@@ -100,7 +95,7 @@ export default function Application(props) {
       // setDay(all[0])
     })
   }, []);
- 
+
   return (
     <main className="layout">
       <section className="sidebar">
