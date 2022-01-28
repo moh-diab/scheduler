@@ -16,8 +16,10 @@ export default function Form(props) {
 
   const cancel = () => {
     reset();
-    props.onCanel();
+    props.onCancel();
   }
+
+  
 
   function validate() {
     if (name === "") {

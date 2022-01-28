@@ -1,15 +1,16 @@
-//import React from "react";
+
 import React, { useState, useEffect } from "react";
 
 import DayList from "components/DayList";
 import "components/Application.scss";
-import Appointment from "components/Appointment/index";
+import Appointment from "components/Appointment";
 import {
   getAppointmentsForDay,
   getInterview,
   getInterviewersForDay
 }
   from "helpers/selectors";
+
 import axios from "axios";
 
 
@@ -22,7 +23,6 @@ export default function Application(props) {
     interviewers: {}
   });
 
-
   const setDay = day => setState({ ...state, day });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day)
@@ -30,7 +30,7 @@ export default function Application(props) {
   //console.log("app.js interviewers =", interviewers)
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
+    //console.log(id, interview);
 
     const appointment = {
       ...state.appointments[id],
@@ -42,10 +42,27 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    return axios.put(`/api/appointments/${id}`, { interview })
-      .then(() => setState({ ...state, appointments }))
-      .catch(err => console.log(err));
+    return axios.put(`/api/appointments/${id}`, {interview})
+    .then(() => setState({...state, appointments}))
+    .catch(err => console.log(err));
+    
   }
+
+  function cancelInterview(id) {
+    //console.log(state.appointment, "state.appointment log")
+    const appointment = {
+      ...state.appointments[id], interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    //console.log("this is state&appointments in application:", state, appointments)
+    return axios.delete(`/api/appointments/${id}`)
+    .then(() => setState({...state, appointments}))
+    .catch(err => console.log(err));
+  };
+
 
 
   const appointment = dailyAppointments.map((appointment) => {
@@ -59,6 +76,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
@@ -82,7 +100,7 @@ export default function Application(props) {
       // setDay(all[0])
     })
   }, []);
-
+ 
   return (
     <main className="layout">
       <section className="sidebar">

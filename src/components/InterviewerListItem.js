@@ -1,11 +1,12 @@
 import React from "react";
-import classNames from "classnames";
-import "components/InterviewerListItem.scss";
+
+import classnames from "classnames";
+import "components/InterviewerListItem.scss"
 
 // renders image of available interviewers on appointment
 export default function InterviewerListItem(props) {
-  const interviewerClass = classNames("interviewers__item", {
-    "interviewers__item--selected": props.selected
+  const interviewerClass = classnames("interviewers__item", {
+    "interviewers__item--selected": props.selected,
   })
 
   return (

@@ -6,9 +6,9 @@ import "components/InterviewerList.scss";
 export default function InterviewerList(props) {
   // InterviewerList passes the setInterviewer function down to the InterviewerListItem
 
-  console.log("InterviewerList.js props.interviewers =", props.interviewers);
+   //console.log("InterviewerList.js props.interviewers =", props.interviewers);
 
-  const interviewers = props.interviewers.map(interviewer => {
+   const interviewers = props.interviewers.map(interviewer => {
 
     return (
       <InterviewerListItem
