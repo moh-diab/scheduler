@@ -35,33 +35,27 @@ export default function Appointment(props) {
     };
     transition(SAVING);
     //need to have a Promise here to wait for the axios put 
-    Promise.resolve(props.bookInterview(props.id, interview))
+    props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
-      .catch(err => {
-        transition(ERROR_SAVE, true)
-        console.log(err)
-      })
+      .catch(err => transition(ERROR_SAVE, true));
     }
   // const deleteConfirmation = () => {
   //   transition(CONFIRM, true);
   // };
 
   const deleteAppointment = () => {
-    transition(DELETING, true);
+    transition(DELETING);
 
-    //console.log(props, "this is the props from index.js")
-    Promise.resolve(props.cancelInterview(props.id))
+    console.log(props, "this is the props from index.js")
+    props.cancelInterview(props.id)
       .then(() => transition(EMPTY))
-      .catch(err => {
-        transition(ERROR_DELETE, true)
-        console.log(err)
-      });
+      .catch(err => transition(ERROR_DELETE, true));
   };
 
 
   return (
 
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment" >
 
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => { transition(CREATE) }} />}
@@ -87,9 +81,9 @@ export default function Appointment(props) {
       )}
       {mode === CONFIRM && (
         <Confirm
-          message="Are you sure you want to delete?"
+          message="Are you sure you would like to delete?"
           onConfirm={deleteAppointment}
-          onCancel={() => back()}
+          onCancel={back}
         />
       )}
       {mode === DELETING && (
@@ -102,20 +96,20 @@ export default function Appointment(props) {
         name={props.interview.student}
         interview={props.interview.interviewer.id}
         interviewers={props.interviewers}
-        onCancel={() => back()}
+        onCancel={back}
         onSave={save}
         />
       )}
       {mode === ERROR_SAVE && (
         <Error 
-        message="Unable to save, try again"
-        onClose={() => back()}
+        message="Error saving appointment"
+        onClose={back}
         />
       )}
       {mode === ERROR_DELETE && (
         <Error 
-        message="Unable to delete"
-        onClose={() => back()}
+        message="Error deleting appointment"
+        onClose={back}
         />
       )}
     </article>

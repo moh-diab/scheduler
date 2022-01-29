@@ -11,9 +11,9 @@ export default function useApplicationData(initial) {
   });
   const setDay = day => setState({ ...state, day });
 
-  function bookInterview(id, interview) { //update spots: decrease spots
+  function bookInterview(id, interview) { //update spots: decreasing spots
     //console.log(id, interview);
-
+    
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -23,24 +23,42 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment
     };
-    function decreaseSpots() {
-      const availableDays = [...state.days];
-      availableDays.map((day) => {
-        for(const appointment of day.appointments){
-          if(appointment === id) {
-            day.spots--;
-          }
-        }
-      })
-      return availableDays;
-    }
 
-    return axios.put(`/api/appointments/${id}`, {interview})
+    //if the user is editing an appointment, it shouldn't affect the spot count: 
+    const editAppt = Boolean(state.appointments[id].interview);
+
+   
+    console.log(state.days[0].spots, "BEFORE")
+
+    return axios.put(`/api/appointments/${id}`, appointment)
     .then(() => {
-      decreaseSpots();
-      setState({...state, appointments})
+      
+      const days = state.days.map((day) => {
+        if (day.appointments.includes(id)) {
+          return { ...day, spots: editAppt ? day.spots:  day.spots - 1}
+        }
+        return day;
+      })
+      //console.log("this is the days array:", days)
+      setState({...state, appointments, days})
+      //console.log("this is the state.days", state.days)
+      console.log(state.days[0].spots, "AFTER")
     })
   }
+
+  // const numOfSpots = (id, numDifference) => {
+  //   const daysArr = [...state.days]
+  //   const day = updatedSpots;
+  //   daysArr.map(function(day) {
+  //     for(let appointment of day.appointments) {
+  //       if (appointment === id) {
+  //         day.spots += numDifference;
+  //       }
+  //     }
+  //     return day.spots;
+  //   })
+  //   return daysArr;
+  // }
 
 
 
@@ -54,22 +72,18 @@ export default function useApplicationData(initial) {
       [id]: appointment
     };
 
-    function increaseSpots() {
-      const availableDays = [...state.days];
-      availableDays.map((day) => {
-        for(const appointment of day.appointments){
-          if(appointment === id) {
-            day.spots++;
-          }
-        }
-      })
-      return availableDays;
-    }
     //console.log("this is state&appointments in application:", state, appointments)
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
-    increaseSpots();
-    setState({...state, appointments});
+    // numOfSpots(id, 1)
+    //spot increases when a user canels an appointment: 
+    const days = state.days.map((day) => {
+      if (day.appointments.includes(id)) {
+        return {...day, spots: day.spots + 1}
+      }
+      return day;
+    })
+    setState({...state, appointments, days});
     })
   }
   useEffect(() => {
