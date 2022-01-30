@@ -4,19 +4,19 @@ Interview Scheduler is a single page React application that allows users to book
 
 
 ## Interview Scheduler:
-![Interview Scheduler]()
+![Interview Scheduler](https://github.com/moh-diab/scheduler/blob/cfe814a3ebf2299ebb6599d87467ff38496ab1a8/docs/appointment-form.png?raw=true)
 
 ## Creating Appointments:
-![Appointment-Create ]()
+![Appointment-Create ](https://github.com/moh-diab/scheduler/blob/cfe814a3ebf2299ebb6599d87467ff38496ab1a8/docs/appointment-create.png?raw=true)
 
 ## Saving Appointment:
-![Appointment Saving]()
+![Appointment Saving](https://github.com/moh-diab/scheduler/blob/cfe814a3ebf2299ebb6599d87467ff38496ab1a8/docs/appointment-saving.png?raw=true)
 
 ## Delete Appointments/Delete Confirmation:
-![delete confirmation]()
+![delete confirmation](https://github.com/moh-diab/scheduler/blob/cfe814a3ebf2299ebb6599d87467ff38496ab1a8/docs/appointment-delete.png?raw=true)
 
 ## Deleting Message: 
-![deleting]()
+![deleting](https://github.com/moh-diab/scheduler/blob/cfe814a3ebf2299ebb6599d87467ff38496ab1a8/docs/appointment-saving.png?raw=true)
 
 
 ## Setup
