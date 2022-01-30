@@ -46,21 +46,6 @@ export default function useApplicationData(initial) {
     })
   }
 
-  // const numOfSpots = (id, numDifference) => {
-  //   const daysArr = [...state.days]
-  //   const day = updatedSpots;
-  //   daysArr.map(function(day) {
-  //     for(let appointment of day.appointments) {
-  //       if (appointment === id) {
-  //         day.spots += numDifference;
-  //       }
-  //     }
-  //     return day.spots;
-  //   })
-  //   return daysArr;
-  // }
-
-
 
   function cancelInterview(id) { //update spots 
     //console.log(state.appointment, "state.appointment log")
@@ -72,10 +57,8 @@ export default function useApplicationData(initial) {
       [id]: appointment
     };
 
-    //console.log("this is state&appointments in application:", state, appointments)
     return axios.delete(`/api/appointments/${id}`)
     .then(() => {
-    // numOfSpots(id, 1)
     //spot increases when a user canels an appointment: 
     const days = state.days.map((day) => {
       if (day.appointments.includes(id)) {
@@ -98,10 +81,7 @@ export default function useApplicationData(initial) {
       const appointments = all[1].data;
       const interviewers = all[2].data;
 
-      //console.log("all:", all[1].data)
-      //console.log("this is the interviewers:", state.interviewers)
       setState((prev) => ({ ...prev, days, appointments, interviewers }));
-      // setDay(all[0])
     })
   }, []);
 

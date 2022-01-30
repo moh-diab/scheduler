@@ -33,15 +33,13 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+    
     transition(SAVING);
     //need to have a Promise here to wait for the axios put 
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(err => transition(ERROR_SAVE, true));
     }
-  // const deleteConfirmation = () => {
-  //   transition(CONFIRM, true);
-  // };
 
   const deleteAppointment = () => {
     transition(DELETING);
